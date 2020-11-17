@@ -22,5 +22,7 @@ public class CameraAggregator {
         ResponseEntity[] responseEntities = jsonUtils.readValue(connectionUtils.connectAndGet(MAIN_URL), ResponseEntity[].class);
 
         Arrays.stream(responseEntities).forEach(entity -> pool.submit(new ClientThread(entity, result, connectionUtils, jsonUtils)));
+
+        pool.shutdown();
     }
 }
