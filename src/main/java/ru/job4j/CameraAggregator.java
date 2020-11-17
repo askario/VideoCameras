@@ -2,8 +2,11 @@ package ru.job4j;
 
 import ru.job4j.dto.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,9 +23,19 @@ public class CameraAggregator {
 
     public void process() {
         ResponseEntity[] responseEntities = jsonUtils.readValue(connectionUtils.connectAndGet(MAIN_URL), ResponseEntity[].class);
+        CompletableFuture[] futures = new CompletableFuture[responseEntities.length];
 
-        Arrays.stream(responseEntities).forEach(entity -> pool.submit(new ClientThread(entity, result, connectionUtils, jsonUtils)));
+        for (int i = 0; i < responseEntities.length; i++) {
+            Thread workerThread = new WorkerThread(responseEntities[i], result, connectionUtils, jsonUtils);
+            futures[i] = CompletableFuture.runAsync(workerThread, pool);
+        }
+
+        CompletableFuture.allOf(futures).join();
 
         pool.shutdown();
+    }
+
+    public Map<Integer, AggregatedEntity> getResult() {
+        return result;
     }
 }

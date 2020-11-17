@@ -6,13 +6,13 @@ import ru.job4j.dto.TokenData;
 
 import java.util.Map;
 
-public class ClientThread extends Thread {
+public class WorkerThread extends Thread {
     private final ResponseEntity responseEntity;
     private final Map<Integer, AggregatedEntity> result;
     private final ConnectionUtils connectionUtils;
     private final JsonUtils jsonUtils;
 
-    public ClientThread(ResponseEntity responseEntity, Map<Integer, AggregatedEntity> result, ConnectionUtils connectionUtils, JsonUtils jsonUtils) {
+    public WorkerThread(ResponseEntity responseEntity, Map<Integer, AggregatedEntity> result, ConnectionUtils connectionUtils, JsonUtils jsonUtils) {
         this.responseEntity = responseEntity;
         this.result = result;
         this.connectionUtils = connectionUtils;
