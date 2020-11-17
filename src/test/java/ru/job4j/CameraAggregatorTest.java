@@ -24,7 +24,7 @@ public class CameraAggregatorTest {
         assertThat(result.size(), is(4));
         assertThat(result, IsMapContaining.hasKey(20));
 
-        assertThat(result,is(expected));
+        assertThat(result.get(Integer.valueOf(20).toString()),is(expected.get(Integer.valueOf(20).toString())));
     }
 
     private Map<Integer, AggregatedEntity> expectedMap() {
