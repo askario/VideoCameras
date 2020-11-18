@@ -7,7 +7,6 @@ import ru.job4j.dto.UrlType;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -24,7 +23,7 @@ public class CameraAggregatorTest {
         assertThat(result.size(), is(4));
         assertThat(result, IsMapContaining.hasKey(20));
 
-        assertThat(result.get(Integer.valueOf(20).toString()),is(expected.get(Integer.valueOf(20).toString())));
+        assertThat(result.get(Integer.valueOf(20).toString()), is(expected.get(Integer.valueOf(20).toString())));
     }
 
     private Map<Integer, AggregatedEntity> expectedMap() {
